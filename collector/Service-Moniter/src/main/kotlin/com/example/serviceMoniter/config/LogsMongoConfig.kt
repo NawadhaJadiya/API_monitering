@@ -28,7 +28,14 @@ class LogsMongoConfig {
     
     @Bean(name = ["logsMongoClient"])
     fun logsMongoClient(): MongoClient {
-        return MongoClients.create(logsUri)
+        if (this::logsUri.isInitialized.not() || logsUri.isBlank()) {
+            throw IllegalStateException("Missing configuration: 'spring.data.mongodb.logs.uri' is not set or empty. Please set it in application.properties for the logs MongoDB connection.")
+        }
+        try {
+            return MongoClients.create(logsUri)
+        } catch (ex: Exception) {
+            throw IllegalStateException("Failed to create MongoClient for logs using uri='$logsUri'. Check URI, network/DNS and credentials. Cause: ${ex.message}", ex)
+        }
     }
 
   
