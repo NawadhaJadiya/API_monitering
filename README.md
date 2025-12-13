@@ -66,11 +66,11 @@ Make sure MongoDB is running (or Mongo Atlas credentials are set in application.
 
 This is the small Spring Boot project you use to generate logs.
 
-./mvnw spring-boot:run
+mvn spring-boot:run
 
 
 Runs on something like:
-👉 http://localhost:9090
+👉 http://localhost:3577
  (or your configured port)
 
 Any request sent to this demo app → interceptor logs → logs appear in collector DB and dashboard.
